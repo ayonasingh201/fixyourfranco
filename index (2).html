@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bonjour French – Learn French for Beginners</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --bg: #fdf8f2;
+      --card: #fff;
+      --text: #2d2d2d;
+      --muted: #666;
+      --accent: #b5432a;
+      --accent2: #2a6bb5;
+      --border: #e8ddd0;
+      --nav-bg: #fff;
+      --shadow: 0 2px 16px rgba(0,0,0,0.07);
+      --quiz-opt: #f5f0ea;
+      --quiz-opt-hover: #ede4d8;
+    }
+    [data-theme="dark"] {
+      --bg: #1a1a1a;
+      --card: #242424;
+      --text: #e8e8e8;
+      --muted: #aaa;
+      --accent: #e06b50;
+      --accent2: #5b9bd5;
+      --border: #333;
+      --nav-bg: #1f1f1f;
+      --shadow: 0 2px 16px rgba(0,0,0,0.4);
+      --quiz-opt: #2e2e2e;
+      --quiz-opt-hover: #383838;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+      line-height: 1.7;
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; }
+
+    /* ===== PROGRESS BAR ===== */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: var(--accent); width: 0%;
+      z-index: 9999; transition: width 0.1s;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky; top: 0; z-index: 1000;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+    .nav-links {
+      display: flex; gap: 1.5rem; list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--text); letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    #theme-toggle {
+      background: none; border: 1px solid var(--border);
+      border-radius: 20px; padding: 4px 12px;
+      cursor: pointer; font-size: 1rem;
+      color: var(--text); transition: all 0.2s;
+    }
+    #theme-toggle:hover { background: var(--border); }
+    .hamburger {
+      display: none; flex-direction: column;
+      gap: 5px; cursor: pointer; background: none;
+      border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ===== MOBILE NAV ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none; flex-direction: column;
+        position: absolute; top: 60px; left: 0; right: 0;
+        background: var(--nav-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 2rem; gap: 1rem;
+      }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      background: linear-gradient(160deg, var(--bg) 60%, #f0e6d8 100%);
+      border-bottom: 1px solid var(--border);
+      animation: fadeInUp 0.8s ease both;
+    }
+    .hero-flag { font-size: 3rem; margin-bottom: 1rem; }
+    #hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    #hero p {
+      font-size: 1.1rem; color: var(--muted);
+      max-width: 600px; margin: 0 auto 2rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 0.7rem 1.8rem; border-radius: 6px;
+      font-weight: 700; font-size: 0.95rem;
+      cursor: pointer; border: none; transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #9e3820; text-decoration: none; color: #fff; }
+    .btn-outline {
+      background: none; border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+    .btn-outline:hover { background: var(--accent); color: #fff; text-decoration: none; }
+
+    /* ===== SECTION COMMON ===== */
+    section { padding: 4rem 2rem; }
+    .section-title {
+      text-align: center; font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 0.5rem; color: var(--text);
+    }
+    .section-sub {
+      text-align: center; color: var(--muted);
+      margin-bottom: 2.5rem; font-size: 0.97rem;
+    }
+    .container { max-width: 860px; margin: 0 auto; }
+
+    /* ===== DIFFICULTIES (ACCORDION) ===== */
+    #difficulties { background: var(--card); }
+    .accordion { margin-bottom: 0.8rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .accordion-header {
+      width: 100%; background: none; border: none;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 1.2rem; cursor: pointer;
+      font-family: 'Lato', sans-serif; font-size: 1rem;
+      font-weight: 700; color: var(--text);
+      transition: background 0.2s;
+    }
+    .accordion-header:hover { background: var(--quiz-opt); }
+    .accordion-icon { font-size: 1.2rem; transition: transform 0.3s; }
+    .accordion.open .accordion-icon { transform: rotate(45deg); }
+    .accordion-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      padding: 0 1.2rem;
+    }
+    .accordion.open .accordion-body {
+      max-height: 400px; padding: 0 1.2rem 1.2rem;
+    }
+    .accordion-body p { color: var(--muted); font-size: 0.95rem; margin-top: 0.5rem; }
+    .difficulty-tag {
+      display: inline-block; font-size: 0.75rem;
+      padding: 2px 8px; border-radius: 12px;
+      background: var(--accent); color: #fff;
+      margin-bottom: 0.4rem; font-weight: 700;
+    }
+    .tip-box {
+      margin-top: 0.8rem; background: var(--quiz-opt);
+      border-left: 3px solid var(--accent2);
+      padding: 0.7rem 1rem; border-radius: 0 6px 6px 0;
+      font-size: 0.9rem; color: var(--text);
+    }
+
+    /* ===== VOCABULARY TABLE ===== */
+    #vocabulary { background: var(--bg); }
+    .vocab-tabs {
+      display: flex; gap: 0.5rem; justify-content: center;
+      margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 0.5rem 1.2rem; border-radius: 20px;
+      border: 2px solid var(--border); background: none;
+      cursor: pointer; font-weight: 700; font-size: 0.9rem;
+      color: var(--text); transition: all 0.2s;
+    }
+    .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .vocab-table { display: none; }
+    .vocab-table.active { display: block; }
+    table {
+      width: 100%; border-collapse: collapse;
+      background: var(--card); border-radius: 10px;
+      overflow: hidden; box-shadow: var(--shadow);
+    }
+    thead { background: var(--accent); color: #fff; }
+    th, td { padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    td:nth-child(2) { color: var(--accent); font-weight: 700; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--quiz-opt); }
+
+    /* ===== QUIZ ===== */
+    #quiz { background: var(--card); }
+    .quiz-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      max-width: 600px; margin: 0 auto;
+      box-shadow: var(--shadow);
+    }
+    .quiz-question {
+      font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+    .quiz-meta {
+      font-size: 0.85rem; color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 0.7rem; }
+    .quiz-opt {
+      padding: 0.75rem 1rem; border-radius: 8px;
+      border: 2px solid var(--border); background: var(--quiz-opt);
+      cursor: pointer; font-size: 0.97rem; font-weight: 700;
+      transition: all 0.2s; text-align: left; color: var(--text);
+    }
+    .quiz-opt:hover { background: var(--quiz-opt-hover); border-color: var(--accent); }
+    .quiz-opt.correct { background: #d4edda; border-color: #27ae60; color: #155724; }
+    .quiz-opt.wrong { background: #f8d7da; border-color: #e74c3c; color: #721c24; }
+    .quiz-feedback {
+      margin-top: 1rem; font-size: 0.95rem;
+      padding: 0.6rem 1rem; border-radius: 6px; display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: #d4edda; color: #155724; }
+    .quiz-feedback.wrong { background: #f8d7da; color: #721c24; }
+    .quiz-nav { display: flex; justify-content: space-between; margin-top: 1.5rem; align-items: center; }
+    .quiz-score { font-weight: 700; color: var(--accent); }
+    .progress-dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 1rem; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--border); transition: background 0.3s;
+    }
+    .dot.done { background: var(--accent); }
+    .dot.current { background: var(--accent2); }
+
+    /* ===== TIPS GRID ===== */
+    #tips { background: var(--bg); }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+    .tip-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.3rem;
+      box-shadow: var(--shadow); transition: transform 0.2s;
+    }
+    .tip-card:hover { transform: translateY(-3px); }
+    .tip-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+    .tip-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+    .tip-card p { font-size: 0.88rem; color: var(--muted); }
+
+    /* ===== RESOURCES ===== */
+    #resources { background: var(--card); }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .resource-card {
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.2rem; transition: box-shadow 0.2s;
+    }
+    .resource-card:hover { box-shadow: var(--shadow); }
+    .resource-card .res-type {
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--accent2); text-transform: uppercase;
+      letter-spacing: 0.5px; margin-bottom: 0.3rem;
+    }
+    .resource-card h3 { font-size: 1rem; margin-bottom: 0.3rem; font-family: 'Lato', sans-serif; }
+    .resource-card p { font-size: 0.85rem; color: var(--muted); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--nav-bg);
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 2rem;
+      font-size: 0.88rem; color: var(--muted);
+    }
+    footer strong { color: var(--accent); }
+
+    /* ===== BACK TO TOP ===== */
+    #back-top {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      border: none; font-size: 1.2rem; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      box-shadow: var(--shadow); transition: all 0.2s; z-index: 500;
+    }
+    #back-top:hover { background: #9e3820; transform: translateY(-2px); }
+    #back-top.show { display: flex; }
+
+    /* ===== SPEAK BUTTON ===== */
+    .speak-btn {
+      background: none; border: 1.5px solid var(--accent2);
+      border-radius: 20px; padding: 3px 10px;
+      cursor: pointer; font-size: 0.82rem; font-weight: 700;
+      color: var(--accent2); display: inline-flex;
+      align-items: center; gap: 4px;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .speak-btn:hover { background: var(--accent2); color: #fff; }
+    .speak-btn.speaking {
+      background: var(--accent2); color: #fff;
+      animation: pulse 0.6s infinite alternate;
+    }
+    @keyframes pulse { from { opacity: 1; } to { opacity: 0.6; } }
+    .voice-banner {
+      background: #eaf3ff; border: 1px solid #b3d4f5;
+      border-radius: 8px; padding: 0.7rem 1rem;
+      font-size: 0.88rem; color: #1a4f7a;
+      margin-bottom: 1.2rem; display: flex;
+      align-items: center; gap: 0.5rem;
+    }
+    [data-theme="dark"] .voice-banner {
+      background: #1a2e40; border-color: #2a5580; color: #7db8e8;
+    }
+    th:last-child, td:last-child { text-align: center; width: 90px; }
+
+    /* ===== MOVIES & SERIES ===== */
+    #movies {
+      position: relative; overflow: hidden;
+      padding: 5rem 2rem;
+    }
+    #movies::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(
+        135deg,
+        #FF9933 0%,       /* India saffron */
+        #FF9933 8%,
+        #ffffff 16%,      /* India white */
+        #138808 24%,      /* India green */
+        #000080 32%,      /* India Ashoka blue */
+        #0055A4 44%,      /* France blue */
+        #ffffff 58%,      /* France white */
+        #EF4135 72%,      /* France red */
+        #FF9933 85%,      /* back to saffron */
+        #138808 100%      /* back to green */
+      );
+      opacity: 0.18;
+      transition: opacity 0.5s;
+    }
+    #movies:hover::before { opacity: 0.32; }
+    #movies.section-active::before { opacity: 0.38; }
+
+    /* Animated ombre shimmer on scroll-into-view */
+    #movies.visible-section::before {
+      animation: ombreShift 6s ease infinite alternate;
+    }
+    @keyframes ombreShift {
+      0%   { background-position: 0% 50%; opacity: 0.22; }
+      50%  { background-position: 100% 50%; opacity: 0.35; }
+      100% { background-position: 0% 50%; opacity: 0.22; }
+    }
+
+    .movies-flag-bar {
+      display: flex; height: 7px; border-radius: 4px;
+      overflow: hidden; margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .movies-flag-bar span {
+      flex: 1; display: block;
+    }
+
+    .movies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.3rem; position: relative; z-index: 1;
+    }
+    .movie-card {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+    .movie-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .movie-card-top {
+      height: 7px;
+      background: linear-gradient(90deg, #0055A4, #fff, #EF4135, #FF9933, #fff, #138808);
+    }
+    .movie-card-body { padding: 1.2rem; }
+    .movie-type {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: inline-block; padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .movie-type.film { background: #fff0e0; color: #c05000; }
+    .movie-type.series { background: #e0f0ff; color: #0055a4; }
+    [data-theme="dark"] .movie-type.film { background: #3d2000; color: #ffaa55; }
+    [data-theme="dark"] .movie-type.series { background: #001f3d; color: #66aaff; }
+    .movie-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; margin-bottom: 0.3rem;
+    }
+    .movie-card .movie-meta {
+      font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .movie-card p { font-size: 0.87rem; color: var(--muted); }
+    .movie-level {
+      display: inline-block; margin-top: 0.6rem;
+      font-size: 0.75rem; font-weight: 700;
+      background: var(--quiz-opt); color: var(--accent);
+      padding: 2px 8px; border-radius: 10px;
+    }
+    .movies-section-title {
+      text-align: center; position: relative; z-index: 1;
+    }
+    .movies-section-title h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      background: linear-gradient(90deg, #0055A4 0%, #EF4135 40%, #FF9933 70%, #138808 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.4rem;
+    }
+    .movies-section-title p { color: var(--muted); margin-bottom: 1.5rem; }
+
+    /* ===== CREDITS FOOTER ===== */
+    .credits-bar {
+      background: linear-gradient(90deg,
+        #FF9933 0%, #FF9933 16%,
+        #ffffff 16%, #ffffff 34%,
+        #138808 34%, #138808 50%,
+        #0055A4 50%, #0055A4 66%,
+        #ffffff 66%, #ffffff 84%,
+        #EF4135 84%, #EF4135 100%
+      );
+      height: 4px; width: 100%;
+    }
+    .credits-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      background: linear-gradient(90deg, #FF9933, #138808, #0055A4, #EF4135);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+  <script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">🇫🇷 Bonjour French</span>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#difficulties">Difficulties</a></li>
+    <li><a href="#vocabulary">Vocabulary</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#tips">Tips</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#movies">🎬 Movies</a></li>
+  </ul>
+  <div class="nav-right">
+    <button id="theme-toggle" title="Toggle Dark Mode">🌙</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-flag">🇫🇷</div>
+  <h1>Learn French with Confidence</h1>
+  <p>Your friendly guide to mastering the most common challenges beginners face when learning French — from pronunciation to grammar.</p>
+  <div class="hero-btns">
+    <a href="#difficulties" class="btn btn-primary">Explore Difficulties</a>
+    <a href="#quiz" class="btn btn-outline">Take the Quiz</a>
+  </div>
+</section>
+
+<!-- DIFFICULTIES -->
+<section id="difficulties">
+  <div class="container">
+    <h2 class="section-title fade-in">Common Beginner Difficulties</h2>
+    <p class="section-sub fade-in">Click each topic to learn more and get tips to overcome it.</p>
+
+    <div class="accordion fade-in">
+      <button class="accordion-header">
+        <span>🔊 Pronunciation & Silent Letters</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <span class="difficulty-tag">Hard</span>
+        <p>French has many silent letters — the final consonant of a word is usually not pronounced. For example, <em>vous</em> sounds like "voo," and <em>beaucoup</em> sounds like "bo-koo." The letter H is almost always silent too.</p>
+        <div class="tip-box">💡 <strong>Tip:</strong> Listen to native speakers on YouTube or podcasts daily. Apps like Forvo let you hear how each word is pronounced by real French speakers.</div>
+      </div>
+    </div>
+
+    <div class="accordion fade-in">
+      <button class="accordion-header">
+        <span>⚤ Gendered Nouns (Masculine & Feminine)</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <span class="difficulty-tag">Tricky</span>
+        <p>Every French noun is either masculine (le/un) or feminine (la/une), and there is no strict rule — you must memorize each noun's gender. For example, <em>le livre</em> (the book) is masculine, while <em>la table</em> (the table) is feminine.</p>
+        <div class="tip-box">💡 <strong>Tip:</strong> Always learn the article with the noun. Instead of memorizing "table," learn "la table" as one unit. Color-code your notes: blue for masculine, pink/red for feminine.</div>
+      </div>
+    </div>
+
+    <div class="accordion fade-in">
+      <button class="accordion-header">
+        <span>🔀 Verb Conjugations</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <span class="difficulty-tag">Complex</span>
+        <p>French verbs change depending on the subject (je, tu, il/elle, nous, vous, ils/elles) and tense. There are regular verbs (-er, -ir, -re) and many irregular verbs like <em>être</em> (to be) and <em>avoir</em> (to have) that must be memorized separately.</p>
+        <div class="tip-box">💡 <strong>Tip:</strong> Master the present tense first. Use conjugation tables and practice with apps like Anki. Learn the most common irregular verbs (être, avoir, aller, faire) as a priority.</div>
+      </div>
+    </div>
+
+    <div class="accordion fade-in">
+      <button class="accordion-header">
+        <span>✍️ Accents & Special Characters</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <span class="difficulty-tag">Moderate</span>
+        <p>French uses accents that change pronunciation and meaning. The main ones are: <em>é</em> (acute), <em>è/ê</em> (grave/circumflex), <em>ç</em> (cedilla), and <em>ô/â</em>. Forgetting an accent can change the meaning of a word — <em>ou</em> means "or," while <em>où</em> means "where."</p>
+        <div class="tip-box">💡 <strong>Tip:</strong> Change your phone or keyboard language to French. This gives you quick access to accented characters and makes writing practice much easier.</div>
+      </div>
+    </div>
+
+    <div class="accordion fade-in">
+      <button class="accordion-header">
+        <span>🎭 Formal vs Informal Speech (Tu vs Vous)</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <span class="difficulty-tag">Cultural</span>
+        <p>French has two ways to say "you": <em>tu</em> (informal, for friends and family) and <em>vous</em> (formal, for strangers, elders, or professional settings). Using the wrong one can seem rude or overly casual.</p>
+        <div class="tip-box">💡 <strong>Tip:</strong> When in doubt, always use <em>vous</em>. French people will often invite you to use <em>tu</em> (called "tutoyer") when it's appropriate.</div>
+      </div>
+    </div>
+
+    <div class="accordion fade-in">
+      <button class="accordion-header">
+        <span>🔗 Liaison & Elision</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <span class="difficulty-tag">Intermediate</span>
+        <p><strong>Liaison</strong> is when the normally silent final consonant of a word is pronounced when the next word starts with a vowel. Example: <em>les enfants</em> sounds like "lay-zan-fahn." <strong>Elision</strong> is when a vowel is dropped before another vowel — <em>je aime</em> becomes <em>j'aime</em>.</p>
+        <div class="tip-box">💡 <strong>Tip:</strong> Don't panic — liaisons become natural with listening practice. Focus on speaking and the patterns will come automatically over time.</div>
+      </div>
+    </div>
+
+    <div class="accordion fade-in">
+      <button class="accordion-header">
+        <span>🔢 French Numbers & Counting</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <span class="difficulty-tag">Confusing</span>
+        <p>French numbers can be baffling: 70 is <em>soixante-dix</em> (sixty-ten), 80 is <em>quatre-vingts</em> (four-twenties), and 90 is <em>quatre-vingt-dix</em> (four-twenty-ten). This requires a different way of thinking about numbers.</p>
+        <div class="tip-box">💡 <strong>Tip:</strong> Practice counting out loud every day — count steps, count items in the fridge, count anything! Make it a daily habit and it will become second nature.</div>
+      </div>
+    </div>
+
+    <div class="accordion fade-in">
+      <button class="accordion-header">
+        <span>🌀 Nasal Sounds</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-body">
+        <span class="difficulty-tag">Pronunciation</span>
+        <p>French has nasal vowels that don't exist in English: <em>an/en</em>, <em>in/ain</em>, <em>on</em>, and <em>un</em>. The sound comes from letting air flow through the nose. Words like <em>bon</em> (good), <em>vin</em> (wine), and <em>pain</em> (bread) use nasal sounds.</p>
+        <div class="tip-box">💡 <strong>Tip:</strong> Watch your mouth in a mirror while practicing. Try humming softly while saying these sounds — the vibration in your nose is the key!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOCABULARY -->
+<section id="vocabulary">
+  <div class="container">
+    <h2 class="section-title fade-in">Basic Vocabulary</h2>
+    <p class="section-sub fade-in">Browse essential words every French beginner should know.</p>
+    <div class="vocab-tabs fade-in">
+      <button class="tab-btn active" onclick="showTab('greetings', this)">👋 Greetings</button>
+      <button class="tab-btn" onclick="showTab('numbers', this)">🔢 Numbers</button>
+      <button class="tab-btn" onclick="showTab('colors', this)">🎨 Colors</button>
+      <button class="tab-btn" onclick="showTab('phrases', this)">💬 Phrases</button>
+    </div>
+
+    <div id="tab-greetings" class="vocab-table active">
+      <div class="voice-banner">🔊 Click <strong>▶ Play</strong> to hear the French word spoken aloud. Works best on <strong>Chrome</strong> or <strong>Edge</strong>. On mobile, tap once to activate audio first.</div>
+      <table>
+        <thead><tr><th>English</th><th>French</th><th>Pronunciation</th><th>Listen</th></tr></thead>
+        <tbody>
+          <tr><td>Hello</td><td>Bonjour</td><td>bohn-ZHOOR</td><td><button class="speak-btn" onclick="speakFrench('Bonjour', this)">▶ Play</button></td></tr>
+          <tr><td>Good evening</td><td>Bonsoir</td><td>bohn-SWAHR</td><td><button class="speak-btn" onclick="speakFrench('Bonsoir', this)">▶ Play</button></td></tr>
+          <tr><td>Goodbye</td><td>Au revoir</td><td>oh ruh-VWAHR</td><td><button class="speak-btn" onclick="speakFrench('Au revoir', this)">▶ Play</button></td></tr>
+          <tr><td>Please</td><td>S'il vous plaît</td><td>seel voo PLAY</td><td><button class="speak-btn" onclick="speakFrench('S\'il vous plaît', this)">▶ Play</button></td></tr>
+          <tr><td>Thank you</td><td>Merci</td><td>mehr-SEE</td><td><button class="speak-btn" onclick="speakFrench('Merci', this)">▶ Play</button></td></tr>
+          <tr><td>You're welcome</td><td>De rien</td><td>duh RYAHN</td><td><button class="speak-btn" onclick="speakFrench('De rien', this)">▶ Play</button></td></tr>
+          <tr><td>Sorry / Excuse me</td><td>Excusez-moi</td><td>ex-koo-ZAY mwah</td><td><button class="speak-btn" onclick="speakFrench('Excusez-moi', this)">▶ Play</button></td></tr>
+          <tr><td>How are you?</td><td>Comment allez-vous?</td><td>koh-mahn ta-lay VOO</td><td><button class="speak-btn" onclick="speakFrench('Comment allez-vous', this)">▶ Play</button></td></tr>
+          <tr><td>I'm fine</td><td>Je vais bien</td><td>zhuh vay BYAHN</td><td><button class="speak-btn" onclick="speakFrench('Je vais bien', this)">▶ Play</button></td></tr>
+          <tr><td>Nice to meet you</td><td>Enchanté</td><td>ahn-shahn-TAY</td><td><button class="speak-btn" onclick="speakFrench('Enchanté', this)">▶ Play</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="tab-numbers" class="vocab-table">
+      <div class="voice-banner">🔊 Click <strong>Listen</strong> on any row to hear the French number spoken aloud!</div>
+      <table>
+        <thead><tr><th>Number</th><th>French</th><th>Pronunciation</th><th>Listen</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Un / Une</td><td>uhn / oon</td><td><button class="speak-btn" onclick="speakFrench('Un', this)">▶ Play</button></td></tr>
+          <tr><td>2</td><td>Deux</td><td>duh</td><td><button class="speak-btn" onclick="speakFrench('Deux', this)">▶ Play</button></td></tr>
+          <tr><td>3</td><td>Trois</td><td>trwah</td><td><button class="speak-btn" onclick="speakFrench('Trois', this)">▶ Play</button></td></tr>
+          <tr><td>4</td><td>Quatre</td><td>KAH-truh</td><td><button class="speak-btn" onclick="speakFrench('Quatre', this)">▶ Play</button></td></tr>
+          <tr><td>5</td><td>Cinq</td><td>sank</td><td><button class="speak-btn" onclick="speakFrench('Cinq', this)">▶ Play</button></td></tr>
+          <tr><td>10</td><td>Dix</td><td>dees</td><td><button class="speak-btn" onclick="speakFrench('Dix', this)">▶ Play</button></td></tr>
+          <tr><td>20</td><td>Vingt</td><td>vahn</td><td><button class="speak-btn" onclick="speakFrench('Vingt', this)">▶ Play</button></td></tr>
+          <tr><td>50</td><td>Cinquante</td><td>san-KAHNT</td><td><button class="speak-btn" onclick="speakFrench('Cinquante', this)">▶ Play</button></td></tr>
+          <tr><td>70</td><td>Soixante-dix</td><td>swah-sahnt DEES</td><td><button class="speak-btn" onclick="speakFrench('Soixante-dix', this)">▶ Play</button></td></tr>
+          <tr><td>100</td><td>Cent</td><td>sahn</td><td><button class="speak-btn" onclick="speakFrench('Cent', this)">▶ Play</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="tab-colors" class="vocab-table">
+      <div class="voice-banner">🔊 Click <strong>Listen</strong> on any row to hear the French color spoken aloud!</div>
+      <table>
+        <thead><tr><th>Color</th><th>French</th><th>Pronunciation</th><th>Listen</th></tr></thead>
+        <tbody>
+          <tr><td>Red</td><td>Rouge</td><td>roozh</td><td><button class="speak-btn" onclick="speakFrench('Rouge', this)">▶ Play</button></td></tr>
+          <tr><td>Blue</td><td>Bleu</td><td>bluh</td><td><button class="speak-btn" onclick="speakFrench('Bleu', this)">▶ Play</button></td></tr>
+          <tr><td>Green</td><td>Vert</td><td>vehr</td><td><button class="speak-btn" onclick="speakFrench('Vert', this)">▶ Play</button></td></tr>
+          <tr><td>Yellow</td><td>Jaune</td><td>zhohn</td><td><button class="speak-btn" onclick="speakFrench('Jaune', this)">▶ Play</button></td></tr>
+          <tr><td>Black</td><td>Noir</td><td>nwahr</td><td><button class="speak-btn" onclick="speakFrench('Noir', this)">▶ Play</button></td></tr>
+          <tr><td>White</td><td>Blanc</td><td>blahn</td><td><button class="speak-btn" onclick="speakFrench('Blanc', this)">▶ Play</button></td></tr>
+          <tr><td>Pink</td><td>Rose</td><td>rohz</td><td><button class="speak-btn" onclick="speakFrench('Rose', this)">▶ Play</button></td></tr>
+          <tr><td>Orange</td><td>Orange</td><td>oh-RAHNZH</td><td><button class="speak-btn" onclick="speakFrench('Orange', this)">▶ Play</button></td></tr>
+          <tr><td>Purple</td><td>Violet</td><td>vyoh-LAY</td><td><button class="speak-btn" onclick="speakFrench('Violet', this)">▶ Play</button></td></tr>
+          <tr><td>Brown</td><td>Marron</td><td>mah-ROHN</td><td><button class="speak-btn" onclick="speakFrench('Marron', this)">▶ Play</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="tab-phrases" class="vocab-table">
+      <div class="voice-banner">🔊 Click <strong>Listen</strong> on any row to hear the French phrase spoken aloud!</div>
+      <table>
+        <thead><tr><th>English</th><th>French</th><th>Pronunciation</th><th>Listen</th></tr></thead>
+        <tbody>
+          <tr><td>Where is...?</td><td>Où est...?</td><td>oo ay</td><td><button class="speak-btn" onclick="speakFrench('Où est', this)">▶ Play</button></td></tr>
+          <tr><td>I don't understand</td><td>Je ne comprends pas</td><td>zhuh nuh kohm-PRAHN pah</td><td><button class="speak-btn" onclick="speakFrench('Je ne comprends pas', this)">▶ Play</button></td></tr>
+          <tr><td>Do you speak English?</td><td>Parlez-vous anglais?</td><td>par-lay voo ahn-GLAY</td><td><button class="speak-btn" onclick="speakFrench('Parlez-vous anglais', this)">▶ Play</button></td></tr>
+          <tr><td>I would like...</td><td>Je voudrais...</td><td>zhuh voo-DRAY</td><td><button class="speak-btn" onclick="speakFrench('Je voudrais', this)">▶ Play</button></td></tr>
+          <tr><td>How much is it?</td><td>C'est combien?</td><td>say kohm-BYAHN</td><td><button class="speak-btn" onclick="speakFrench('C\'est combien', this)">▶ Play</button></td></tr>
+          <tr><td>I am hungry</td><td>J'ai faim</td><td>zhay fahm</td><td><button class="speak-btn" onclick="speakFrench('J\'ai faim', this)">▶ Play</button></td></tr>
+          <tr><td>Help!</td><td>Au secours!</td><td>oh suh-KOOR</td><td><button class="speak-btn" onclick="speakFrench('Au secours', this)">▶ Play</button></td></tr>
+          <tr><td>My name is...</td><td>Je m'appelle...</td><td>zhuh mah-PEL</td><td><button class="speak-btn" onclick="speakFrench('Je m\'appelle', this)">▶ Play</button></td></tr>
+          <tr><td>Yes / No</td><td>Oui / Non</td><td>wee / nohn</td><td><button class="speak-btn" onclick="speakFrench('Oui. Non', this)">▶ Play</button></td></tr>
+          <tr><td>I love French!</td><td>J'adore le français!</td><td>zhah-DOR luh frahn-SAY</td><td><button class="speak-btn" onclick="speakFrench('J\'adore le français', this)">▶ Play</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="container">
+    <h2 class="section-title fade-in">Test Your French!</h2>
+    <p class="section-sub fade-in">Answer these beginner questions to check your progress.</p>
+    <div class="quiz-card fade-in">
+      <div class="progress-dots" id="dots"></div>
+      <div class="quiz-meta" id="quiz-meta">Question 1 of 8</div>
+      <div class="quiz-question" id="quiz-q"></div>
+      <div class="quiz-options" id="quiz-opts"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <div class="quiz-nav">
+        <span class="quiz-score" id="quiz-score">Score: 0</span>
+        <button class="btn btn-primary" id="quiz-next" onclick="nextQuestion()" style="display:none">Next →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section id="tips">
+  <div class="container">
+    <h2 class="section-title fade-in">Study Tips for Success</h2>
+    <p class="section-sub fade-in">Practical habits that accelerate your French learning journey.</p>
+    <div class="tips-grid">
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🎧</div>
+        <h3>Listen Every Day</h3>
+        <p>Even 15 minutes of French music, podcasts, or YouTube trains your ear to the rhythm and sounds of the language.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🗣️</div>
+        <h3>Speak Out Loud</h3>
+        <p>Don't just read — say words and sentences aloud. Talk to yourself in French. Pronunciation improves only through speaking.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">📒</div>
+        <h3>Use Flashcards</h3>
+        <p>Apps like Anki use spaced repetition so you review words just before you forget them — scientifically proven to work.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🎬</div>
+        <h3>Watch French Films</h3>
+        <p>Start with French subtitles, not English. Shows like <em>Lupin</em> or <em>Call My Agent</em> are beginner-friendly and fun.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">📅</div>
+        <h3>Be Consistent</h3>
+        <p>20 minutes every day beats 3 hours once a week. Consistency is more important than intensity. Build a habit.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🤝</div>
+        <h3>Find a Language Partner</h3>
+        <p>Practice with a native speaker on apps like Tandem or HelloTalk. Real conversations accelerate learning rapidly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="container">
+    <h2 class="section-title fade-in">Recommended Resources</h2>
+    <p class="section-sub fade-in">Free and paid tools to help you learn French effectively.</p>
+    <div class="resources-grid">
+      <div class="resource-card fade-in">
+        <div class="res-type">📱 App</div>
+        <h3>Duolingo</h3>
+        <p>Fun, gamified French lessons. Great for absolute beginners to build daily habits.</p>
+      </div>
+      <div class="resource-card fade-in">
+        <div class="res-type">📱 App</div>
+        <h3>Anki</h3>
+        <p>Powerful flashcard app with spaced repetition. Use community French decks.</p>
+      </div>
+      <div class="resource-card fade-in">
+        <div class="res-type">🌐 Website</div>
+        <h3>Forvo</h3>
+        <p>Pronunciation dictionary — hear any French word spoken by native speakers.</p>
+      </div>
+      <div class="resource-card fade-in">
+        <div class="res-type">🎬 YouTube</div>
+        <h3>Français avec Pierre</h3>
+        <p>Clear, entertaining French lessons on YouTube covering grammar and conversation.</p>
+      </div>
+      <div class="resource-card fade-in">
+        <div class="res-type">🎬 YouTube</div>
+        <h3>InnerFrench</h3>
+        <p>Podcast-style videos in slow, clear French. Perfect for intermediate beginners.</p>
+      </div>
+      <div class="resource-card fade-in">
+        <div class="res-type">🤝 Community</div>
+        <h3>r/learnfrench</h3>
+        <p>Supportive Reddit community for French learners of all levels. Great for questions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOVIES & SERIES -->
+<section id="movies">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="movies-section-title fade-in">
+      <h2>🎬 French Movies & Series</h2>
+      <p>Watch your way to fluency — hand-picked for French beginners, with 🇫🇷 & 🇮🇳 love</p>
+    </div>
+
+    <!-- Dual flag stripe: Indian + French -->
+    <div class="movies-flag-bar fade-in">
+      <span style="background:#FF9933;"></span><!-- India saffron -->
+      <span style="background:#ffffff;border-top:1px solid #eee;border-bottom:1px solid #eee;"></span><!-- India white -->
+      <span style="background:#138808;"></span><!-- India green -->
+      <span style="background:#000080;width:6px;flex:0 0 6px;"></span><!-- Ashoka blue divider -->
+      <span style="background:#0055A4;"></span><!-- France blue -->
+      <span style="background:#ffffff;border-top:1px solid #eee;border-bottom:1px solid #eee;"></span><!-- France white -->
+      <span style="background:#EF4135;"></span><!-- France red -->
+    </div>
+
+    <div class="movies-grid">
+
+      <div class="movie-card fade-in">
+        <div class="movie-card-top"></div>
+        <div class="movie-card-body">
+          <span class="movie-type series">Series</span>
+          <h3>Lupin</h3>
+          <div class="movie-meta">2021 · Netflix · Crime / Thriller</div>
+          <p>A modern-day gentleman thief inspired by Arsène Lupin. Gripping story, everyday French dialogue. One of the most-watched French shows worldwide.</p>
+          <span class="movie-level">🟢 Beginner Friendly</span>
+        </div>
+      </div>
+
+      <div class="movie-card fade-in">
+        <div class="movie-card-top"></div>
+        <div class="movie-card-body">
+          <span class="movie-type series">Series</span>
+          <h3>Call My Agent! (Dix pour cent)</h3>
+          <div class="movie-meta">2015 · Netflix · Comedy / Drama</div>
+          <p>A Parisian talent agency navigates crisis. Natural spoken French, cultural humor, and a glimpse into everyday Parisian life.</p>
+          <span class="movie-level">🟡 Intermediate</span>
+        </div>
+      </div>
+
+      <div class="movie-card fade-in">
+        <div class="movie-card-top"></div>
+        <div class="movie-card-body">
+          <span class="movie-type film">Film</span>
+          <h3>Amélie (Le Fabuleux Destin d'Amélie Poulain)</h3>
+          <div class="movie-meta">2001 · Classic · Romance / Comedy</div>
+          <p>A shy Parisian woman decides to improve the lives of others. Poetic French narration and a magical atmosphere loved worldwide.</p>
+          <span class="movie-level">🟢 Beginner Friendly</span>
+        </div>
+      </div>
+
+      <div class="movie-card fade-in">
+        <div class="movie-card-top"></div>
+        <div class="movie-card-body">
+          <span class="movie-type film">Film</span>
+          <h3>The Intouchables (Intouchables)</h3>
+          <div class="movie-meta">2011 · Drama / Comedy</div>
+          <p>An unlikely friendship between a wealthy quadriplegic and his caregiver. Real, funny, touching French with clear pronunciation.</p>
+          <span class="movie-level">🟢 Beginner Friendly</span>
+        </div>
+      </div>
+
+      <div class="movie-card fade-in">
+        <div class="movie-card-top"></div>
+        <div class="movie-card-body">
+          <span class="movie-type series">Series</span>
+          <h3>Emily in Paris</h3>
+          <div class="movie-meta">2020 · Netflix · Romance / Comedy</div>
+          <p>An American in Paris. Mix of English and French — great for picking up everyday French phrases and Parisian culture.</p>
+          <span class="movie-level">🟢 Beginner Friendly</span>
+        </div>
+      </div>
+
+      <div class="movie-card fade-in">
+        <div class="movie-card-top"></div>
+        <div class="movie-card-body">
+          <span class="movie-type series">Series</span>
+          <h3>Astrid et Raphaëlle</h3>
+          <div class="movie-meta">2019 · France Télévisions · Crime</div>
+          <p>A brilliant but socially awkward archivist helps solve crimes. Clear, calm French speech — perfect for following along as a learner.</p>
+          <span class="movie-level">🟡 Intermediate</span>
+        </div>
+      </div>
+
+      <div class="movie-card fade-in">
+        <div class="movie-card-top"></div>
+        <div class="movie-card-body">
+          <span class="movie-type film">Film</span>
+          <h3>Les Choristes (The Chorus)</h3>
+          <div class="movie-meta">2004 · Drama / Music</div>
+          <p>A music teacher transforms a troubled school through song. Beautiful, clear French dialogue with emotional depth — a classroom favourite.</p>
+          <span class="movie-level">🟢 Beginner Friendly</span>
+        </div>
+      </div>
+
+      <div class="movie-card fade-in">
+        <div class="movie-card-top"></div>
+        <div class="movie-card-body">
+          <span class="movie-type series">Series</span>
+          <h3>Plan Coeur (The Hook Up Plan)</h3>
+          <div class="movie-meta">2018 · Netflix · Rom-Com</div>
+          <p>Friends hire an escort to help their heartbroken friend move on. Casual, modern French slang and relationship vocabulary in every episode.</p>
+          <span class="movie-level">🟡 Intermediate</span>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="fade-in" style="text-align:center;margin-top:2rem;color:var(--muted);font-size:0.9rem;">
+      💡 <strong>Tip:</strong> Always watch with French subtitles, not English — your brain learns faster when reading and listening in the same language!
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="credits-bar"></div>
+  <p style="margin-top:1.2rem;">Made with ❤️ for French beginners everywhere &nbsp;|&nbsp; <strong>Bonjour French</strong></p>
+  <p style="margin-top:0.4rem;">Bonne chance dans votre apprentissage ! 🇫🇷 <em>(Good luck in your learning!)</em></p>
+  <p style="margin-top:1rem;font-size:0.82rem;color:var(--muted);">
+    Designed &amp; Created by &nbsp;<span class="credits-name">✨ AYONA SINGH ✨</span>
+  </p>
+  <p style="margin-top:0.3rem;font-size:0.78rem;color:var(--muted);">🇮🇳 With love from India &nbsp;·&nbsp; 🇫🇷 Pour l'amour du français</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-top" title="Back to top">↑</button>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  // ─── French TTS via ResponsiveVoice ─────────────────────────────
+  // Works on Chrome, Firefox, Safari, Edge, and mobile.
+
+  function resetAllBtns() {
+    document.querySelectorAll('.speak-btn').forEach(b => {
+      b.classList.remove('speaking');
+      b.textContent = '▶ Play';
+    });
+  }
+
+  function speakFrench(text, btn) {
+    resetAllBtns();
+    btn.classList.add('speaking');
+    btn.textContent = '🔊 ...';
+
+    if (typeof responsiveVoice !== 'undefined' && responsiveVoice.voiceSupport()) {
+      responsiveVoice.cancel();
+      responsiveVoice.speak(text, 'French Female', {
+        rate: 0.9,
+        pitch: 1,
+        volume: 1,
+        onend: () => resetAllBtns(),
+        onerror: () => {
+          resetAllBtns();
+          btn.textContent = '⚠️ Retry';
+          setTimeout(() => { btn.textContent = '▶ Play'; }, 2000);
+        }
+      });
+    } else {
+      // Native Web Speech API fallback
+      if (!window.speechSynthesis) {
+        resetAllBtns();
+        btn.textContent = '❌ No voice';
+        setTimeout(() => { btn.textContent = '▶ Play'; }, 2000);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      setTimeout(() => {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'fr-FR';
+        utter.rate = 0.85;
+        const voices = window.speechSynthesis.getVoices();
+        const frVoice = voices.find(v => v.lang === 'fr-FR') || voices.find(v => v.lang.startsWith('fr'));
+        if (frVoice) utter.voice = frVoice;
+        utter.onend = () => resetAllBtns();
+        utter.onerror = (e) => { if (e.error !== 'interrupted') resetAllBtns(); };
+        window.speechSynthesis.speak(utter);
+      }, 200);
+    }
+  }
+
+  // --- Progress Bar ---
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress-bar').style.width = (scrolled / total * 100) + '%';
+    document.getElementById('back-top').classList.toggle('show', scrolled > 300);
+  });
+
+  // --- Back to Top ---
+  document.getElementById('back-top').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // --- Dark Mode ---
+  const toggle = document.getElementById('theme-toggle');
+  toggle.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    toggle.textContent = isDark ? '🌙' : '☀️';
+  });
+
+  // --- Mobile Nav ---
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  // Close nav on link click
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('nav-links').classList.remove('open');
+    });
+  });
+
+  // --- Accordion ---
+  document.querySelectorAll('.accordion-header').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const acc = btn.parentElement;
+      const wasOpen = acc.classList.contains('open');
+      document.querySelectorAll('.accordion').forEach(a => a.classList.remove('open'));
+      if (!wasOpen) acc.classList.add('open');
+    });
+  });
+
+  // --- Vocabulary Tabs ---
+  function showTab(name, btn) {
+    document.querySelectorAll('.vocab-table').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // --- Movies Section Ombre Activation ---
+  const moviesSection = document.getElementById('movies');
+  const moviesObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        moviesSection.classList.add('visible-section');
+      } else {
+        moviesSection.classList.remove('visible-section');
+      }
+    });
+  }, { threshold: 0.1 });
+  moviesObserver.observe(moviesSection);
+
+  // --- Scroll Animations ---
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // --- QUIZ ---
+  const questions = [
+    { q: 'How do you say "Hello" in French?', opts: ['Bonjour', 'Au revoir', 'Merci', 'Bonsoir'], ans: 0, explain: '✅ "Bonjour" is used to say hello during the day.' },
+    { q: 'Which article is used for feminine nouns?', opts: ['Le', 'La', 'Les', 'Un'], ans: 1, explain: '✅ "La" is the feminine definite article (e.g., la table).' },
+    { q: 'What does "Je voudrais" mean?', opts: ['I am hungry', 'I would like', 'I don\'t know', 'I am sorry'], ans: 1, explain: '✅ "Je voudrais" = "I would like" — a polite way to request things.' },
+    { q: 'How do you say 70 in French?', opts: ['Septante', 'Soixante-dix', 'Soixante-douze', 'Sept-dix'], ans: 1, explain: '✅ "Soixante-dix" literally means "sixty-ten" = 70.' },
+    { q: 'What is the informal "you" in French?', opts: ['Nous', 'Vous', 'Tu', 'Il'], ans: 2, explain: '✅ "Tu" is informal, used with friends and family. "Vous" is formal.' },
+    { q: 'What does "Où" mean?', opts: ['Or', 'Where', 'Who', 'When'], ans: 1, explain: '✅ "Où" (with accent) = "Where". "Ou" (no accent) = "Or". Accents matter!' },
+    { q: 'Which verb means "to be" in French?', opts: ['Avoir', 'Faire', 'Être', 'Aller'], ans: 2, explain: '✅ "Être" means "to be." It\'s one of the most important irregular verbs.' },
+    { q: 'How do you say "Thank you" in French?', opts: ['De rien', 'Merci', 'S\'il vous plaît', 'Enchanté'], ans: 1, explain: '✅ "Merci" means "Thank you." "De rien" means "You\'re welcome."' }
+  ];
+
+  let current = 0, score = 0, answered = false;
+
+  function renderDots() {
+    const dots = document.getElementById('dots');
+    dots.innerHTML = questions.map((_, i) =>
+      `<div class="dot ${i < current ? 'done' : i === current ? 'current' : ''}"></div>`
+    ).join('');
+  }
+
+  function renderQuestion() {
+    const q = questions[current];
+    document.getElementById('quiz-meta').textContent = `Question ${current + 1} of ${questions.length}`;
+    document.getElementById('quiz-q').textContent = q.q;
+    document.getElementById('quiz-opts').innerHTML = q.opts.map((opt, i) =>
+      `<button class="quiz-opt" onclick="selectAnswer(${i})">${opt}</button>`
+    ).join('');
+    document.getElementById('quiz-feedback').className = 'quiz-feedback';
+    document.getElementById('quiz-feedback').textContent = '';
+    document.getElementById('quiz-next').style.display = 'none';
+    answered = false;
+    renderDots();
+  }
+
+  function selectAnswer(i) {
+    if (answered) return;
+    answered = true;
+    const q = questions[current];
+    const opts = document.querySelectorAll('.quiz-opt');
+    opts[i].classList.add(i === q.ans ? 'correct' : 'wrong');
+    opts[q.ans].classList.add('correct');
+    opts.forEach(o => o.disabled = true);
+    const fb = document.getElementById('quiz-feedback');
+    fb.textContent = q.explain;
+    fb.className = 'quiz-feedback show ' + (i === q.ans ? 'correct' : 'wrong');
+    if (i === q.ans) score++;
+    document.getElementById('quiz-score').textContent = `Score: ${score}`;
+    document.getElementById('quiz-next').style.display = 'block';
+  }
+
+  function nextQuestion() {
+    current++;
+    if (current >= questions.length) {
+      const card = document.querySelector('.quiz-card');
+      card.innerHTML = `
+        <div style="text-align:center;padding:1rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;">${score >= 6 ? '🎉' : '📚'}</div>
+          <h3 style="font-size:1.5rem;margin-bottom:0.5rem;">Quiz Complete!</h3>
+          <p style="font-size:1.1rem;color:var(--accent);font-weight:700;margin-bottom:0.5rem;">You scored ${score} out of ${questions.length}</p>
+          <p style="color:var(--muted);margin-bottom:1.5rem;">${score >= 7 ? 'Excellent! You\'re off to a great start! 🇫🇷' : score >= 5 ? 'Good job! Keep practicing!' : 'Keep studying — you\'ll get there! 💪'}</p>
+          <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+        </div>`;
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function restartQuiz() {
+    current = 0; score = 0;
+    document.querySelector('.quiz-card').innerHTML = `
+      <div class="progress-dots" id="dots"></div>
+      <div class="quiz-meta" id="quiz-meta"></div>
+      <div class="quiz-question" id="quiz-q"></div>
+      <div class="quiz-options" id="quiz-opts"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <div class="quiz-nav">
+        <span class="quiz-score" id="quiz-score">Score: 0</span>
+        <button class="btn btn-primary" id="quiz-next" onclick="nextQuestion()" style="display:none">Next →</button>
+      </div>`;
+    renderQuestion();
+  }
+
+  renderQuestion();
+</script>
+</body>
+</html>
